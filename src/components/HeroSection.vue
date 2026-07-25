@@ -3,136 +3,99 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { guildInfo } from '../data/members.js'
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '')
-const mouseX = ref(0)
-const mouseY = ref(0)
-const isLoaded = ref(false)
+const loaded = ref(false)
+const logoLoaded = ref(false)
 
-function handleMouseMove(e) {
-  mouseX.value = (e.clientX / window.innerWidth - 0.5) * 25
-  mouseY.value = (e.clientY / window.innerHeight - 0.5) * 12
-}
-
-onMounted(() => {
-  window.addEventListener('mousemove', handleMouseMove)
-  setTimeout(() => { isLoaded.value = true }, 80)
-})
-onUnmounted(() => window.removeEventListener('mousemove', handleMouseMove))
+onMounted(() => setTimeout(() => { loaded.value = true }, 60))
 </script>
 
 <template>
-  <section id="hero" class="relative min-h-screen overflow-hidden bg-[#020408]">
+  <section id="hero" class="relative w-full overflow-hidden bg-[#02050c]" style="min-height: 100svh;">
 
-    <!-- Background: foto info guild sebagai atmosphere -->
-    <div class="absolute inset-0"
-         :style="{ transform: `translate(${mouseX * 0.15}px, ${mouseY * 0.1}px) scale(1.05)` }"
-         style="transition: transform 1.2s cubic-bezier(0.25,0.46,0.45,0.94)">
-      <img :src="`${BASE}/assets/guild/info.jpg`"
-           alt=""
-           class="w-full h-full object-cover object-center"
-           style="filter: brightness(0.15) saturate(0.4) blur(2px);" />
+    <!-- Background — subtle, foto info sebagai texture gelap -->
+    <div class="absolute inset-0">
+      <img
+        :src="`${BASE}/assets/guild/info.jpg`"
+        alt=""
+        aria-hidden="true"
+        class="absolute inset-0 w-full h-full object-cover"
+        style="filter: brightness(0.08) saturate(0.3);"
+      />
     </div>
+    <!-- Subtle top-right glow -->
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 60% 60% at 75% 40%, rgba(6,182,212,0.04) 0%, transparent 70%);"></div>
 
-    <!-- Gradient overlays -->
-    <div class="absolute inset-0 bg-gradient-to-r from-[#020408] via-[#020408]/70 to-[#020408]/30"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[#020408] via-transparent to-[#020408]/60"></div>
+    <!-- Content: two-column on desktop, stacked on mobile -->
+    <div
+      class="relative z-10 flex flex-col lg:flex-row items-center lg:items-end justify-between px-8 md:px-16 lg:px-20 pb-16 pt-28 gap-12 lg:gap-0"
+      style="min-height: 100svh;"
+    >
 
-    <!-- Subtle cyan atmospheric glow -->
-    <div class="absolute top-0 right-1/3 w-[600px] h-[600px] pointer-events-none"
-         style="background: radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 65%); filter: blur(40px);"></div>
+      <!-- Left: text -->
+      <div
+        class="w-full lg:max-w-[520px] order-2 lg:order-1 transition-all duration-900"
+        :style="loaded ? 'opacity:1; transform:translateY(0)' : 'opacity:0; transform:translateY(20px)'"
+      >
+        <p class="text-[11px] tracking-[0.55em] uppercase text-[#3d6b8f] font-mono mb-6">
+          Guild&nbsp;&nbsp;—&nbsp;&nbsp;Est. {{ guildInfo.founded }}
+        </p>
 
-    <!-- Horizontal line accent top -->
-    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#22d3ee]/20 to-transparent"></div>
+        <h1
+          class="font-black leading-[0.88] select-none mb-6"
+          style="
+            font-family: 'Arial Narrow', 'Arial', sans-serif;
+            font-size: clamp(4.5rem, 15vw, 11rem);
+            letter-spacing: -0.04em;
+            color: #e2f0ff;
+          "
+        >
+          Z-One
+        </h1>
 
-    <!-- Main layout: full height, content kiri bawah, logo kanan -->
-    <div class="relative z-10 min-h-screen flex items-end pb-20 pt-24">
-      <div class="w-full max-w-6xl mx-auto px-8">
-        <div class="flex items-end justify-between gap-12">
+        <p class="text-[#4a7a9b] text-sm tracking-widest uppercase font-mono mb-10">
+          {{ guildInfo.motto }}
+        </p>
 
-          <!-- Left: text content -->
-          <div class="flex-1 max-w-xl"
-               :class="isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
-               style="transition: all 1s cubic-bezier(0.16,1,0.3,1)">
+        <div class="flex items-center gap-8">
+          <a href="#about" class="flex items-center gap-3 group">
+            <span class="block h-px bg-[#22d3ee] transition-all duration-500 group-hover:w-10" style="width:28px;"></span>
+            <span class="text-[11px] tracking-[0.35em] uppercase text-[#7ab3d9] group-hover:text-white transition-colors duration-300 font-mono">
+              About Guild
+            </span>
+          </a>
+          <a href="#members" class="text-[11px] tracking-[0.35em] uppercase text-[#253a4a] hover:text-[#7ab3d9] transition-colors duration-300 font-mono">
+            Members
+          </a>
+        </div>
+      </div>
 
-            <!-- Eyebrow -->
-            <div class="flex items-center gap-3 mb-8">
-              <span class="text-[#22d3ee]/60 text-[10px] tracking-[0.6em] uppercase font-mono">Guild</span>
-              <div class="w-8 h-px bg-[#1a3a5c]"></div>
-              <span class="text-[#3d6b8f] text-[10px] tracking-[0.4em] uppercase font-mono">Est. {{ guildInfo.founded }}</span>
-            </div>
-
-            <!-- Guild name — dominant, left-anchored -->
-            <h1 class="font-black uppercase leading-[0.9] mb-8 select-none"
-                style="font-size: clamp(4.5rem, 14vw, 12rem); letter-spacing: -0.04em; font-family: 'Arial Narrow','Arial',sans-serif;">
-              <span class="block text-[#e8f4ff]"
-                    style="text-shadow: 0 0 60px rgba(34,211,238,0.15);">Z</span>
-              <span class="block text-transparent"
-                    style="
-                      -webkit-text-stroke: 1.5px rgba(34,211,238,0.35);
-                      background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 60%, #0284c7 100%);
-                      -webkit-background-clip: text;
-                      background-clip: text;
-                      -webkit-text-fill-color: transparent;
-                      filter: drop-shadow(0 0 30px rgba(34,211,238,0.25));
-                    ">One</span>
-            </h1>
-
-            <!-- Tagline -->
-            <p class="text-[#7ab3d9] text-base tracking-widest uppercase font-mono mb-12">
-              {{ guildInfo.motto }}
-            </p>
-
-            <!-- CTA row — minimal, directional -->
-            <div class="flex items-center gap-8">
-              <a href="#about"
-                 class="group flex items-center gap-4 text-[#22d3ee] hover:text-[#e8f4ff] transition-colors duration-300">
-                <span class="w-12 h-px bg-[#22d3ee] group-hover:w-20 transition-all duration-500"></span>
-                <span class="text-xs tracking-[0.3em] uppercase font-mono">Tentang Guild</span>
-              </a>
-              <a href="#members"
-                 class="text-[10px] text-[#3d6b8f] hover:text-[#7ab3d9] tracking-[0.3em] uppercase font-mono transition-colors duration-300">
-                Members →
-              </a>
-            </div>
-          </div>
-
-          <!-- Right: logo — besar, featured, bukan decorative -->
-          <div class="flex-shrink-0 hidden lg:block"
-               :class="isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
-               :style="{ transform: isLoaded ? `translate(${mouseX * -0.5}px, ${mouseY * -0.3}px)` : 'translateY(1.5rem)' }"
-               style="transition: opacity 1.2s cubic-bezier(0.16,1,0.3,1) 0.2s, transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94)">
-
-            <!-- Logo container — clean, no gimmicks -->
-            <div class="relative w-64 h-64">
-              <!-- Subtle glow behind logo -->
-              <div class="absolute inset-0 rounded-full pointer-events-none"
-                   style="background: radial-gradient(circle, rgba(34,211,238,0.12) 0%, transparent 70%); filter: blur(20px); transform: scale(1.3);"></div>
-
-              <!-- Logo image — utama, clean -->
-              <div class="relative w-full h-full rounded-sm overflow-hidden border border-[#1a3a5c]/60"
-                   style="box-shadow: 0 0 60px rgba(34,211,238,0.08), 0 40px 80px rgba(0,0,0,0.6);">
-                <img :src="`${BASE}/assets/guild/logo.jpg`"
-                     alt="Guild Z-One"
-                     class="w-full h-full object-cover"
-                     style="filter: saturate(1.1) brightness(0.95);" />
-                <!-- Corner accent top-right -->
-                <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#22d3ee]/50"></div>
-                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#22d3ee]/50"></div>
-              </div>
-
-              <!-- Tag bawah logo -->
-              <div class="absolute -bottom-5 left-0 right-0 flex justify-center">
-                <span class="text-[10px] text-[#3d6b8f] tracking-[0.5em] uppercase font-mono bg-[#020408] px-3">[Z1]</span>
-              </div>
-            </div>
-          </div>
+      <!-- Right: logo — real, prominent, not decorative -->
+      <div
+        class="order-1 lg:order-2 flex-shrink-0 transition-all duration-1000"
+        :style="loaded ? 'opacity:1; transform:translateY(0)' : 'opacity:0; transform:translateY(16px)'"
+        style="transition-delay: 200ms;"
+      >
+        <div class="relative" style="width: clamp(180px, 28vw, 280px); aspect-ratio: 1;">
+          <!-- Glow underneath -->
+          <div
+            class="absolute inset-0 rounded-full pointer-events-none"
+            style="background: radial-gradient(circle, rgba(34,211,238,0.1) 0%, transparent 70%); filter: blur(24px); transform: scale(1.2);"
+          ></div>
+          <!-- Logo — clean square, no ring decoration -->
+          <img
+            :src="`${BASE}/assets/guild/logo.jpg`"
+            alt="Guild Z-One"
+            @load="logoLoaded = true"
+            class="relative w-full h-full object-cover rounded-sm transition-opacity duration-700"
+            :class="logoLoaded ? 'opacity-100' : 'opacity-0'"
+            style="box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(34,211,238,0.12);"
+          />
+          <!-- Tag under logo -->
+          <p
+            class="absolute -bottom-7 left-0 right-0 text-center text-[10px] tracking-[0.5em] uppercase text-[#2a4a5e] font-mono"
+          >[Z1]</p>
         </div>
       </div>
     </div>
-
-    <!-- Bottom line -->
-    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1a3a5c]/60 to-transparent"></div>
   </section>
 </template>
-
-<style scoped>
-</style>
