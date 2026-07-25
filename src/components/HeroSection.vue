@@ -1,95 +1,161 @@
 <script setup>
-import { guildInfo } from '../data/members.js'
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const mouseX = ref(0)
+const mouseY = ref(0)
+const isLoaded = ref(false)
+
+function handleMouseMove(e) {
+  mouseX.value = (e.clientX / window.innerWidth - 0.5) * 30
+  mouseY.value = (e.clientY / window.innerHeight - 0.5) * 15
+}
+
+onMounted(() => {
+  window.addEventListener('mousemove', handleMouseMove)
+  setTimeout(() => { isLoaded.value = true }, 100)
+})
+onUnmounted(() => window.removeEventListener('mousemove', handleMouseMove))
+
+const stats = [
+  { value: '∞', label: 'Grinding' },
+  { value: '2024', label: 'Founded' },
+  { value: '100%', label: 'Solid' },
+]
 </script>
 
 <template>
-  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+  <section id="hero" class="relative min-h-screen overflow-hidden bg-[#020408] flex items-center">
 
-    <!-- Background -->
-    <div class="absolute inset-0 bg-gradient-to-b from-[#060d18] via-[#020408] to-[#020408]"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(37,99,235,0.12),transparent)]"></div>
+    <!-- Background logo large blurred -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none"
+         :style="{ transform: `translate(${mouseX * 0.2}px, ${mouseY * 0.2}px)` }"
+         style="transition: transform 1s cubic-bezier(0.25,0.46,0.45,0.94)">
+      <img src="/assets/guild/logo.jpg"
+           alt=""
+           class="w-[600px] h-[600px] object-contain opacity-[0.04]"
+           style="filter: blur(2px) saturate(0);" />
+    </div>
 
-    <!-- Grid overlay -->
-    <div class="absolute inset-0 opacity-[0.03]"
-         style="background-image: linear-gradient(rgba(34,211,238,1) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,1) 1px, transparent 1px); background-size: 60px 60px;"></div>
+    <!-- Grid -->
+    <div class="absolute inset-0 opacity-[0.025]"
+         style="background-image: linear-gradient(rgba(34,211,238,1) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,1) 1px, transparent 1px); background-size: 80px 80px;"></div>
 
-    <!-- Scan line -->
-    <div class="absolute inset-0 scan-line pointer-events-none"></div>
+    <!-- Animated glow orbs -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full pointer-events-none"
+         style="background: radial-gradient(circle, rgba(6,182,212,0.07) 0%, transparent 70%); filter: blur(60px); animation: pulse-slow 6s ease-in-out infinite;"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full pointer-events-none"
+         style="background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%); filter: blur(40px); animation: pulse-slow 8s ease-in-out infinite 2s;"></div>
 
-    <!-- Glow orbs -->
-    <div class="absolute top-1/3 left-1/4 w-96 h-96 rounded-full bg-[#2563eb]/6 blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-[#06b6d4]/6 blur-3xl pointer-events-none"></div>
+    <!-- Corner brackets — decorative -->
+    <div v-for="pos in ['top-20 left-8', 'top-20 right-8', 'bottom-10 left-8', 'bottom-10 right-8']" :key="pos"
+         class="absolute w-12 h-12 pointer-events-none"
+         :class="pos">
+      <div class="absolute inset-0 border-[#22d3ee]/20"
+           :class="pos.includes('top') ? 'border-t border-l' : pos.includes('right') ? 'border-b border-r' : ''"
+           style=""></div>
+    </div>
+    <div class="absolute top-20 left-8 w-12 h-12 border-t border-l border-[#22d3ee]/25 pointer-events-none"></div>
+    <div class="absolute top-20 right-8 w-12 h-12 border-t border-r border-[#22d3ee]/25 pointer-events-none"></div>
+    <div class="absolute bottom-10 left-8 w-12 h-12 border-b border-l border-[#22d3ee]/25 pointer-events-none"></div>
+    <div class="absolute bottom-10 right-8 w-12 h-12 border-b border-r border-[#22d3ee]/25 pointer-events-none"></div>
 
-    <!-- Corner decorations -->
-    <div class="absolute top-24 left-8 w-16 h-16 border-t-2 border-l-2 border-[#22d3ee]/30"></div>
-    <div class="absolute top-24 right-8 w-16 h-16 border-t-2 border-r-2 border-[#22d3ee]/30"></div>
-    <div class="absolute bottom-12 left-8 w-16 h-16 border-b-2 border-l-2 border-[#22d3ee]/30"></div>
-    <div class="absolute bottom-12 right-8 w-16 h-16 border-b-2 border-r-2 border-[#22d3ee]/30"></div>
+    <!-- Scan line overlay -->
+    <div class="absolute inset-0 pointer-events-none scan-line"></div>
 
-    <!-- Content -->
-    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+    <!-- Main content -->
+    <div class="relative z-10 w-full max-w-5xl mx-auto px-8 py-24"
+         :class="isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
+         style="transition: all 1s cubic-bezier(0.16,1,0.3,1)">
 
-      <!-- Tag badge -->
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-8 border border-[#22d3ee]/30 bg-[#06b6d4]/5 rounded"
-           style="box-shadow: 0 0 20px rgba(34,211,238,0.1)">
-        <span class="text-[#22d3ee] font-mono text-xs tracking-widest">{{ guildInfo.tag }}</span>
-        <span class="w-px h-3 bg-[#1a3a5c]"></span>
-        <span class="text-[#7ab3d9] text-xs tracking-widest uppercase">Est. {{ guildInfo.founded }}</span>
-      </div>
+      <div class="flex flex-col lg:flex-row items-center lg:items-start gap-12">
 
-      <!-- Guild name -->
-      <h1 class="text-6xl md:text-8xl font-black tracking-tight mb-4 uppercase select-none"
-          style="font-family:'Arial Narrow','Arial',sans-serif; letter-spacing: -0.02em;">
-        <span class="text-transparent bg-clip-text bg-gradient-to-b from-[#e8f4ff] via-[#22d3ee] to-[#2563eb]"
-              style="text-shadow: none; filter: drop-shadow(0 0 30px rgba(34,211,238,0.4))">
-          Guild Z-One
-        </span>
-      </h1>
+        <!-- Left: logo + text -->
+        <div class="flex-1 text-center lg:text-left">
 
-      <!-- Divider -->
-      <div class="flex items-center justify-center gap-4 mb-6">
-        <div class="h-px flex-1 max-w-24 bg-gradient-to-r from-transparent to-[#22d3ee]/50"></div>
-        <span class="text-[#22d3ee]/60 text-xs tracking-[0.5em] uppercase font-mono">Z · O · N · E</span>
-        <div class="h-px flex-1 max-w-24 bg-gradient-to-l from-transparent to-[#22d3ee]/50"></div>
-      </div>
+          <!-- Tag -->
+          <div class="inline-flex items-center gap-2 mb-8 px-3 py-1.5 border border-[#1a3a5c] bg-[#0a1628]/80 rounded-sm backdrop-blur-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee] animate-pulse"></span>
+            <span class="text-[10px] text-[#7ab3d9] tracking-[0.5em] uppercase font-mono">Est. 2024</span>
+          </div>
 
-      <!-- Motto -->
-      <p class="text-[#7ab3d9] tracking-widest uppercase text-sm mb-10">
-        {{ guildInfo.motto }}
-      </p>
+          <!-- Guild name — big editorial -->
+          <h1 class="font-black uppercase leading-none mb-6 select-none"
+              style="font-size: clamp(3.5rem, 12vw, 10rem); letter-spacing: -0.03em; font-family: 'Arial Narrow','Arial',sans-serif;">
+            <span class="block text-transparent"
+                  style="
+                    -webkit-text-stroke: 1px rgba(34,211,238,0.4);
+                    background: linear-gradient(135deg, #e8f4ff 0%, #22d3ee 50%, #2563eb 100%);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    filter: drop-shadow(0 0 40px rgba(34,211,238,0.3));
+                  ">
+              Guild
+            </span>
+            <span class="block text-transparent"
+                  style="
+                    -webkit-text-stroke: 1px rgba(34,211,238,0.3);
+                    background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #0ea5e9 100%);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    filter: drop-shadow(0 0 60px rgba(6,182,212,0.4));
+                  ">
+              Z-One
+            </span>
+          </h1>
 
-      <!-- Stats row -->
-      <div class="flex items-center justify-center gap-8 mb-12">
-        <div class="text-center">
-          <div class="text-2xl font-bold text-[#22d3ee] font-mono">—</div>
-          <div class="text-xs text-[#3d6b8f] tracking-widest uppercase mt-1">Members</div>
+          <!-- Tagline -->
+          <p class="text-[#7ab3d9] text-base md:text-lg tracking-widest uppercase mb-10 font-mono">
+            Satu Guild — Satu Tujuan
+          </p>
+
+          <!-- Stats row -->
+          <div class="flex flex-wrap items-center gap-8 mb-10 justify-center lg:justify-start">
+            <div v-for="stat in stats" :key="stat.label" class="text-center">
+              <div class="text-2xl font-bold text-[#22d3ee] font-mono leading-none mb-1"
+                   style="text-shadow: 0 0 20px rgba(34,211,238,0.5)">{{ stat.value }}</div>
+              <div class="text-[10px] text-[#3d6b8f] tracking-widest uppercase">{{ stat.label }}</div>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="flex flex-wrap items-center gap-4 justify-center lg:justify-start">
+            <a href="#about"
+               class="px-8 py-3 text-xs tracking-widest uppercase border border-[#22d3ee]/50 text-[#22d3ee] hover:bg-[#22d3ee]/10 transition-all duration-300 rounded-sm"
+               style="box-shadow: 0 0 20px rgba(34,211,238,0.1)">
+              About Guild
+            </a>
+            <a href="#members"
+               class="px-8 py-3 text-xs tracking-widest uppercase border border-[#1a3a5c] text-[#3d6b8f] hover:border-[#22d3ee]/30 hover:text-[#7ab3d9] transition-all duration-300 rounded-sm">
+              Members →
+            </a>
+          </div>
         </div>
-        <div class="w-px h-8 bg-[#1a3a5c]"></div>
-        <div class="text-center">
-          <div class="text-2xl font-bold text-[#22d3ee] font-mono">{{ guildInfo.founded }}</div>
-          <div class="text-xs text-[#3d6b8f] tracking-widest uppercase mt-1">Founded</div>
-        </div>
-        <div class="w-px h-8 bg-[#1a3a5c]"></div>
-        <div class="text-center">
-          <div class="text-2xl font-bold text-[#22d3ee] font-mono">∞</div>
-          <div class="text-xs text-[#3d6b8f] tracking-widest uppercase mt-1">Grinding</div>
-        </div>
-      </div>
 
-      <!-- CTA -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="#about"
-           class="px-8 py-3 rounded border border-[#22d3ee]/50 bg-[#22d3ee]/8 text-[#22d3ee]
-                  text-sm tracking-widest uppercase hover:bg-[#22d3ee]/15 transition-all duration-300"
-           style="box-shadow: 0 0 20px rgba(34,211,238,0.15)">
-          Tentang Guild
-        </a>
-        <a href="#members"
-           class="px-8 py-3 rounded border border-[#1a3a5c] text-[#3d6b8f]
-                  text-sm tracking-widest uppercase hover:border-[#22d3ee]/30 hover:text-[#7ab3d9]
-                  transition-all duration-300">
-          Lihat Member
-        </a>
+        <!-- Right: logo with glow effect -->
+        <div class="flex-shrink-0 relative"
+             :style="{ transform: `translate(${mouseX * -0.4}px, ${mouseY * -0.3}px)` }"
+             style="transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)">
+          <div class="relative w-56 h-56 lg:w-72 lg:h-72">
+            <!-- Glow ring -->
+            <div class="absolute inset-0 rounded-full"
+                 style="background: radial-gradient(circle, rgba(34,211,238,0.15) 0%, transparent 70%); filter: blur(20px); animation: pulse-slow 4s ease-in-out infinite;"></div>
+            <!-- Border ring -->
+            <div class="absolute inset-2 rounded-full border border-[#22d3ee]/20 animate-spin"
+                 style="animation-duration: 20s;"></div>
+            <div class="absolute inset-4 rounded-full border border-[#1a3a5c]/50 animate-spin"
+                 style="animation-duration: 30s; animation-direction: reverse;"></div>
+            <!-- Logo -->
+            <div class="absolute inset-6 rounded-full overflow-hidden border border-[#22d3ee]/30"
+                 style="box-shadow: 0 0 40px rgba(34,211,238,0.2), inset 0 0 40px rgba(34,211,238,0.05)">
+              <img src="/assets/guild/logo.jpg"
+                   alt="Guild Z-One Logo"
+                   class="w-full h-full object-cover"
+                   style="filter: saturate(1.2) brightness(0.9);" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -97,3 +163,10 @@ import { guildInfo } from '../data/members.js'
     <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#22d3ee]/30 to-transparent"></div>
   </section>
 </template>
+
+<style scoped>
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+</style>
