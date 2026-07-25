@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '')
 const isMenuOpen = ref(false)
 const scrolled = ref(false)
 
@@ -29,7 +30,7 @@ const navLinks = [
       <a href="#hero" class="flex items-center gap-3 group">
         <div class="w-9 h-9 rounded-full overflow-hidden border border-[#22d3ee]/40 flex-shrink-0"
              style="box-shadow: 0 0 15px rgba(34,211,238,0.2)">
-          <img src="/assets/guild/logo.jpg"
+          <img :src="`${BASE}/assets/guild/logo.jpg`"
                alt="Z-One"
                class="w-full h-full object-cover"
                style="filter: saturate(1.1) brightness(0.9);" />
