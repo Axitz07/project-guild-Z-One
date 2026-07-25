@@ -12,12 +12,14 @@
 - [x] Setup Tailwind CSS v4 dengan `@tailwindcss/vite`
 - [x] Design system — token warna modern esports (dark navy, cyan neon, blue)
 - [x] Global styles dengan glow utilities (`glow-blue`, `glow-cyan`, `glow-neon`) dan scan-line effect
-- [x] `NavBar` — responsive, mobile menu, Z1 logo, tombol rekrut
-- [x] `HeroSection` — full-screen dengan grid overlay, corner decorations, stats row
+- [x] `NavBar` — scroll-aware, logo asli guild, animated underline, smooth mobile menu
+- [x] `HeroSection` — logo parallax + mouse tracking, grid overlay, rotating ring decoration, stats row
 - [x] `AboutSection` — guild identity card + guild values grid
 - [x] `MemberSection` — member roster dengan role badges + empty state
 - [x] `FooterSection` — brand footer dengan motto guild
 - [x] `src/data/members.js` — struktur data guild info, roles, placeholder member & achievements
+- [x] Assets logo dan info guild diintegrasikan ke UI
+- [x] Deploy ke GitHub Pages (`https://axitz07.github.io/project-guild-Z-One/`)
 
 ---
 
