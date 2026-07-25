@@ -9,30 +9,34 @@
 
 - [x] Setup proyek (Vue 3 + Vite)
 - [x] Struktur folder dasar
+- [x] Setup Tailwind CSS v4 dengan `@tailwindcss/vite`
+- [x] Design system — token warna modern esports (dark navy, cyan neon, blue)
+- [x] Global styles dengan glow utilities (`glow-blue`, `glow-cyan`, `glow-neon`) dan scan-line effect
+- [x] `NavBar` — responsive, mobile menu, Z1 logo, tombol rekrut
+- [x] `HeroSection` — full-screen dengan grid overlay, corner decorations, stats row
+- [x] `AboutSection` — guild identity card + guild values grid
+- [x] `MemberSection` — member roster dengan role badges + empty state
+- [x] `FooterSection` — brand footer dengan motto guild
+- [x] `src/data/members.js` — struktur data guild info, roles, placeholder member & achievements
 
 ---
 
 ## 🔄 Sedang Dikerjakan
 
-- [ ] Menentukan stack final (Tailwind CSS + Vue Router)
-- [ ] Brainstorm konten dan fitur utama portal
-- [ ] Desain identitas visual guild (warna, logo, tone)
+- [ ] Pengisian data member aktif di `src/data/members.js`
+- [ ] Polish responsivitas mobile semua section
 
 ---
 
 ## 📌 Backlog — Prioritas Tinggi
 
 ### 🏠 Fondasi Web
-- [ ] **Setup Tailwind CSS & Vue Router** — integrasi ke proyek yang sudah ada
-- [ ] **NavBar** — navigasi antar section yang smooth
-- [ ] **HeroSection** — landing page dengan branding dan tagline guild Z-One
-- [ ] **FooterSection** — info kontak, link sosial guild
 - [ ] **Responsif mobile** — semua halaman tampil baik di HP
+- [ ] **Animasi masuk** — section reveal saat scroll
 
 ### 👥 Konten Guild
-- [ ] **AboutGuild** — sejarah berdirinya guild, visi, nilai, dan aturan
-- [ ] **MemberList** — daftar member aktif dengan nama, role, dan rank
-- [ ] **Achievements** — pencapaian guild: ranking, event menang, milestone penting
+- [ ] **Isi data member** — tambahkan member aktif ke `src/data/members.js`
+- [ ] **Achievements section** — pencapaian guild: ranking, event menang, milestone
 - [ ] **RecruitSection** — syarat bergabung, cara daftar, kontak recruiter
 - [ ] **GallerySection** — screenshot momen guild war, event bersama, foto squad
 
@@ -66,9 +70,9 @@
 | Versi | Target | Deskripsi |
 |-------|--------|-----------|
 | v0.1 | ✅ Done | Setup proyek |
-| v0.2 | Sekarang | Setup Tailwind + Vue Router + HeroSection |
-| v0.3 | TBD | Semua section konten guild selesai |
-| v0.4 | TBD | Galeri + fitur tambahan |
+| v0.2 | ✅ Done | Tailwind CSS, design system, NavBar, HeroSection, AboutSection, MemberSection |
+| v0.3 | Sekarang | Isi data member, Achievements, RecruitSection, polish mobile |
+| v0.4 | TBD | GallerySection + animasi + fitur tambahan |
 | v1.0 | TBD | Launch publik, mobile-ready, domain kustom |
 
 ---
