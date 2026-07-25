@@ -13,7 +13,9 @@
 - [x] Design system — token warna modern esports (dark navy, cyan neon, blue)
 - [x] Global styles dengan glow utilities (`glow-blue`, `glow-cyan`, `glow-neon`) dan scan-line effect
 - [x] `NavBar` — scroll-aware, logo asli guild, animated underline, smooth mobile menu
-- [x] `HeroSection` — logo parallax + mouse tracking, grid overlay, rotating ring decoration, stats row
+- [x] `HeroSection` — revamp total: logo Z-One sebagai visual utama, layout dua kolom natural, tidak ada neon/gimmick
+- [x] Cleanup: hapus `HelloWorld.vue`, update page title ke "Guild Z-One"
+- [x] Fix image paths dengan `import.meta.env.BASE_URL` untuk dev + production
 - [x] `AboutSection` — guild identity card + guild values grid
 - [x] `MemberSection` — member roster dengan role badges + empty state
 - [x] `FooterSection` — brand footer dengan motto guild
