@@ -14,23 +14,20 @@ import { members, roles, guildInfo } from '../data/members.js'
         <div class="w-8 h-px bg-[#22d3ee]/50"></div>
       </div>
 
-      <!-- Empty state — sharp, no rounded-lg -->
+      <!-- Empty state — no emoji, clean -->
       <div v-if="members.length === 0"
            class="border border-dashed border-[#1a3a5c] p-16 text-center">
-        <div class="w-16 h-16 mx-auto mb-6 border border-[#1a3a5c] flex items-center justify-center bg-[#0a1628]">
-          <span class="text-2xl">🎮</span>
-        </div>
-        <h3 class="text-[#e8f4ff] font-semibold mb-2 tracking-wide">Roster Coming Soon</h3>
-        <p class="text-[#3d6b8f] text-sm leading-relaxed max-w-sm mx-auto">
+        <div class="w-12 h-px bg-[#1a3a5c] mx-auto mb-8"></div>
+        <h3 class="text-[#7ab3d9] font-medium mb-3 tracking-widest uppercase text-sm font-mono">Roster Coming Soon</h3>
+        <p class="text-[#3d6b8f] text-sm leading-relaxed max-w-sm mx-auto mb-8">
           Data member sedang disiapkan. Tambahkan member di
           <code class="text-[#22d3ee] bg-[#0a1628] px-1 font-mono text-xs">src/data/members.js</code>
         </p>
 
-        <!-- Role legend -->
-        <div class="flex flex-wrap items-center justify-center gap-3 mt-8">
+        <!-- Role legend — no emoji, just text -->
+        <div class="flex flex-wrap items-center justify-center gap-3">
           <div v-for="(role, key) in roles" :key="key"
-               class="flex items-center gap-1.5 px-3 py-1 border border-[#1a3a5c]/50 bg-[#060d18]">
-            <span class="text-xs">{{ role.icon }}</span>
+               class="flex items-center gap-2 px-3 py-1 border border-[#1a3a5c]/50 bg-[#060d18]">
             <span class="text-xs tracking-widest uppercase" :style="{ color: role.color }">{{ role.label }}</span>
           </div>
         </div>

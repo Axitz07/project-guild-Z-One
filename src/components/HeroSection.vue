@@ -52,19 +52,19 @@ onMounted(() => setTimeout(() => { loaded.value = true }, 60))
           Z-One
         </h1>
 
-        <p class="text-[#4a7a9b] text-sm tracking-widest uppercase font-mono mb-10">
+        <p class="text-[#4a7a9b] text-base tracking-widest uppercase font-mono mb-10">
           {{ guildInfo.motto }}
         </p>
 
         <div class="flex items-center gap-8">
           <a href="#about" class="flex items-center gap-3 group">
             <span class="block h-px bg-[#22d3ee] transition-all duration-500 group-hover:w-10" style="width:28px;"></span>
-            <span class="text-[11px] tracking-[0.35em] uppercase text-[#7ab3d9] group-hover:text-white transition-colors duration-300 font-mono">
+            <span class="text-xs tracking-[0.35em] uppercase text-[#7ab3d9] group-hover:text-white transition-colors duration-300 font-mono">
               About Guild
             </span>
           </a>
-          <a href="#members" class="text-[11px] tracking-[0.35em] uppercase text-[#253a4a] hover:text-[#7ab3d9] transition-colors duration-300 font-mono">
-            Members
+          <a href="#members" class="text-xs tracking-[0.35em] uppercase text-[#2a4a5e] hover:text-[#7ab3d9] transition-colors duration-300 font-mono">
+            Members →
           </a>
         </div>
       </div>
