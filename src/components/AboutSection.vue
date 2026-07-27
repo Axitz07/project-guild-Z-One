@@ -1,117 +1,101 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import { guildInfo } from '../data/members.js'
+
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '')
+const el   = ref(null)
+const show = ref(false)
+
+onMounted(() => {
+  const io = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { show.value = true; io.disconnect() }
+  }, { threshold: 0.08 })
+  if (el.value) io.observe(el.value)
+})
 
 const values = [
-  {
-    label: 'Solid',
-    desc: 'Kekompakan di atas segalanya.',
-    size: 'large',
-  },
-  {
-    label: 'Kompetitif',
-    desc: 'Main untuk menang.',
-    size: 'medium',
-  },
-  {
-    label: 'Casual-Friendly',
-    desc: 'Tidak ada tekanan — tempo masing-masing.',
-    size: 'medium',
-  },
-  {
-    label: 'Berkembang',
-    desc: 'Lebih baik setiap hari.',
-    size: 'small',
-  },
+  { label: 'Solid',           desc: 'Kekompakan di atas segalanya.',              num: '01' },
+  { label: 'Kompetitif',      desc: 'Bermain untuk menang.',                       num: '02' },
+  { label: 'Casual-Friendly', desc: 'Tidak ada tekanan — tempo masing-masing.',   num: '03' },
+  { label: 'Berkembang',      desc: 'Lebih baik setiap hari.',                    num: '04' },
 ]
 </script>
 
 <template>
-  <section id="about" class="relative py-28 overflow-hidden bg-[#020408]">
-    <div class="absolute inset-0 bg-gradient-to-b from-[#020408] via-[#060d18]/80 to-[#020408]"></div>
+  <section id="about" ref="el" class="relative bg-[#02050c] overflow-hidden">
+    <div class="h-px bg-gradient-to-r from-transparent via-[#1a3a5c]/40 to-transparent"></div>
 
-    <div class="relative z-10 max-w-6xl mx-auto px-8">
+    <div
+      class="max-w-6xl mx-auto px-8 md:px-14 lg:px-20 py-24 md:py-32 transition-all duration-1000"
+      :style="show ? 'opacity:1; transform:translateY(0)' : 'opacity:0; transform:translateY(20px)'"
+    >
+      <!-- Two-column: identity left, values right -->
+      <div class="grid lg:grid-cols-[1fr_420px] gap-16 lg:gap-24 items-start">
 
-      <!-- Layout: 2 kolom asimetris — konten kiri lebih besar -->
-      <div class="grid lg:grid-cols-[1fr_400px] gap-20 items-start">
-
-        <!-- Left: identitas guild dengan foto info -->
+        <!-- Left: guild identity -->
         <div>
-          <!-- Section label — minimalis, bukan centered divider -->
-          <p class="text-[10px] text-[#3d6b8f] tracking-[0.6em] uppercase font-mono mb-12">About</p>
+          <p class="text-[10px] tracking-[.55em] uppercase font-mono text-[#2a4a5e] mb-10 leading-none">About</p>
 
-          <!-- Guild name + deskripsi — raw typography -->
-          <div class="mb-12">
-            <div class="flex items-start gap-6 mb-8">
-              <!-- Logo kecil inline -->
-              <div class="w-16 h-16 rounded-sm overflow-hidden border border-[#1a3a5c]/60 flex-shrink-0 mt-1">
-                <img :src="`${BASE}/assets/guild/logo.jpg`"
-                     alt="Z-One"
-                     class="w-full h-full object-cover"
-                     style="filter: brightness(0.9) saturate(1.1);" />
-              </div>
-              <div>
-                <h2 class="text-3xl font-black text-[#e8f4ff] uppercase tracking-tight leading-none mb-2"
-                    style="font-family:'Arial Narrow','Arial',sans-serif;">
-                  {{ guildInfo.name }}
-                </h2>
-                <span class="text-xs text-[#3d6b8f] font-mono tracking-widest">{{ guildInfo.tag }} · Est. {{ guildInfo.founded }}</span>
-              </div>
+          <!-- Logo + name -->
+          <div class="flex items-start gap-5 mb-10">
+            <div class="w-14 h-14 flex-shrink-0 overflow-hidden border border-[#1a3a5c]/50"
+                 style="box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+              <img :src="`${BASE}/assets/guild/logo.jpg`"
+                   alt="Z-One"
+                   class="w-full h-full object-cover"
+                   style="filter: brightness(0.9);" />
             </div>
-
-            <p class="text-[#7ab3d9] text-base leading-relaxed max-w-lg">
-              {{ guildInfo.description }}
-            </p>
+            <div class="pt-1">
+              <h2 class="font-black text-[#dde8f5] leading-none tracking-tight mb-1.5"
+                  style="font-family:'Arial Narrow','Arial',sans-serif; font-size: 2rem; letter-spacing:-0.02em;">
+                Guild Z-One
+              </h2>
+              <p class="text-xs text-[#2a4a5e] font-mono tracking-widest">{{ guildInfo.tag }} · Est. {{ guildInfo.founded }}</p>
+            </div>
           </div>
 
-          <!-- Foto info guild -->
-          <div class="relative rounded-sm overflow-hidden"
-               style="aspect-ratio: 16/7;">
-            <img :src="`${BASE}/assets/guild/info.jpg`"
-                 alt="Guild Z-One"
-                 class="w-full h-full object-cover"
-                 style="filter: brightness(0.7) saturate(0.8);" />
-            <div class="absolute inset-0 bg-gradient-to-t from-[#020408]/80 via-transparent to-transparent"></div>
-            <!-- Overlay text bottom -->
-            <div class="absolute bottom-4 left-5">
-              <p class="text-[10px] text-[#7ab3d9] tracking-widest uppercase font-mono">
-                {{ guildInfo.motto }}
-              </p>
+          <p class="text-[#4a7a9b] text-base leading-relaxed mb-16 max-w-lg">
+            {{ guildInfo.description }}
+          </p>
+
+          <!-- Stats row — clean, no borders/cards -->
+          <div class="flex items-start gap-12">
+            <div>
+              <p class="text-2xl font-bold text-[#22d3ee] font-mono leading-none mb-1">2024</p>
+              <p class="text-[10px] text-[#2a4a5e] tracking-[.4em] uppercase font-mono">Founded</p>
             </div>
-            <!-- Corner accent -->
-            <div class="absolute top-3 right-3 w-6 h-6 border-t border-r border-[#22d3ee]/40"></div>
+            <div>
+              <p class="text-2xl font-bold text-[#22d3ee] font-mono leading-none mb-1">Active</p>
+              <p class="text-[10px] text-[#2a4a5e] tracking-[.4em] uppercase font-mono">Status</p>
+            </div>
           </div>
         </div>
 
-        <!-- Right: guild values — bukan card grid, tapi typographic list -->
-        <div class="lg:pt-16">
-          <p class="text-[10px] text-[#3d6b8f] tracking-[0.6em] uppercase font-mono mb-10">Nilai Guild</p>
+        <!-- Right: values — typographic list with scale contrast -->
+        <div class="lg:pt-2">
+          <p class="text-[10px] tracking-[.55em] uppercase font-mono text-[#2a4a5e] mb-10 leading-none">Nilai Guild</p>
 
-          <!-- List dengan ukuran berbeda — bukan seragam -->
-          <div class="space-y-0 divide-y divide-[#1a3a5c]/40">
-            <div v-for="(val, i) in values" :key="val.label"
-                 class="py-6 group cursor-default">
-              <div class="flex items-baseline justify-between gap-4 mb-1">
-                <h3 class="font-bold text-[#e8f4ff] uppercase tracking-tight transition-colors duration-200 group-hover:text-[#22d3ee]"
-                    :style="{
-                      fontSize: val.size === 'large' ? '2rem' : val.size === 'medium' ? '1.35rem' : '1.1rem',
-                      fontFamily: '\'Arial Narrow\',\'Arial\',sans-serif',
-                      lineHeight: 1,
-                    }">
-                  {{ val.label }}
-                </h3>
-                <span class="text-[10px] text-[#3d6b8f] font-mono flex-shrink-0">0{{ i + 1 }}</span>
+          <div class="divide-y divide-[#0d1e2e]">
+            <div
+              v-for="val in values" :key="val.label"
+              class="py-6 group cursor-default flex items-baseline justify-between gap-4"
+            >
+              <div>
+                <h3
+                  class="font-black uppercase leading-none text-[#c8d8ea] group-hover:text-white transition-colors duration-200 mb-2"
+                  style="font-family:'Arial Narrow','Arial',sans-serif; font-size: clamp(1.4rem, 3vw, 2rem); letter-spacing:-0.01em;"
+                >{{ val.label }}</h3>
+                <p class="text-xs text-[#2a4a5e] group-hover:text-[#4a7a9b] transition-colors duration-200 leading-relaxed">
+                  {{ val.desc }}
+                </p>
               </div>
-              <p class="text-xs text-[#3d6b8f] group-hover:text-[#7ab3d9] transition-colors duration-200 leading-relaxed">
-                {{ val.desc }}
-              </p>
+              <span class="text-[10px] text-[#1a3050] font-mono flex-shrink-0">{{ val.num }}</span>
             </div>
           </div>
 
-          <!-- Bottom accent -->
-          <div class="mt-10 pt-6 border-t border-[#1a3a5c]/40">
-            <p class="text-[10px] text-[#3d6b8f] font-mono tracking-widest">
-              Status: <span class="text-[#22d3ee]">Active</span>
+          <div class="mt-10 pt-6 border-t border-[#0d1e2e]">
+            <p class="text-[10px] text-[#1a3050] font-mono tracking-widest">
+              Status: <span class="text-[#22d3ee]">Rekrutmen Terbuka</span>
             </p>
           </div>
         </div>
