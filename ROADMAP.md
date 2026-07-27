@@ -13,9 +13,13 @@
 - [x] Design system — token warna modern esports (dark navy, cyan neon, blue)
 - [x] Global styles dengan glow utilities (`glow-blue`, `glow-cyan`, `glow-neon`) dan scan-line effect
 - [x] `NavBar` — scroll-aware, logo asli guild, animated underline, smooth mobile menu
-- [x] UI improvement: fix text sizes (text-base untuk tagline, text-xs untuk CTA links)
-- [x] FooterSection: full rebuild — logo + identity kiri, nav links kanan, no emoji, proper hierarchy
-- [x] MemberSection: hapus emoji dari empty state dan role legend, divider line yang clean
+- [x] Full UI rebuild: hapus foto chat WhatsApp (`info.jpg`), clean modern esports
+- [x] HeroSection: subtle grid texture, atmospheric glow, logo prominent, scroll reveal
+- [x] AboutSection: logo inline dengan nama guild, typographic values list, tidak ada foto chat
+- [x] MemberSection: no emoji, role color dots, clean empty state, scroll reveal
+- [x] Favicon diganti pakai logo guild Z-One
+- [x] `data/members.js`: hapus emoji dari semua role definitions
+- [x] Spacing konsisten di semua section: `px-8 md:px-14 lg:px-20`
 - [x] `AboutSection` — guild identity card + guild values grid
 - [x] `MemberSection` — member roster dengan role badges + empty state
 - [x] `FooterSection` — brand footer dengan motto guild
