@@ -18,7 +18,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '')
               <img :src="`${BASE}/assets/guild/logo.jpg`"
                    alt="Z-One"
                    class="w-full h-full object-cover"
-                   style="filter: brightness(0.85) saturate(1.1);" />
+                   style="mix-blend-mode: screen;" />
             </div>
             <div>
               <h3 class="font-black text-[#e8f4ff] text-xl leading-none tracking-tight"

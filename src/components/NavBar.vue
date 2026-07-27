@@ -33,7 +33,7 @@ const navLinks = [
           <img :src="`${BASE}/assets/guild/logo.jpg`"
                alt="Z-One"
                class="w-full h-full object-cover"
-               style="filter: saturate(1.1) brightness(0.9);" />
+               style="mix-blend-mode: screen;" />
         </div>
         <div class="flex flex-col leading-none">
           <span class="text-[#e8f4ff] font-bold text-sm tracking-widest uppercase"

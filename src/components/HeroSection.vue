@@ -42,15 +42,14 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           <span class="text-xs tracking-[0.4em] uppercase font-mono text-[#1a3050]">Est. {{ guildInfo.founded }}</span>
         </div>
 
-        <!-- Name — huge editorial -->
+        <!-- Name — sized so it fits on one line -->
         <h1
-          class="font-black uppercase leading-none select-none mb-8"
+          class="font-black uppercase leading-none select-none mb-8 whitespace-nowrap"
           style="
             font-family: 'Arial Narrow', 'Arial', sans-serif;
-            font-size: clamp(5rem, 16vw, 13rem);
-            letter-spacing: -0.04em;
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            letter-spacing: -0.03em;
             color: #dde8f5;
-            text-shadow: 0 0 80px rgba(34,211,238,0.08);
           "
         >Z-One</h1>
 
@@ -83,12 +82,12 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           <!-- Glow behind logo -->
           <div class="absolute inset-0 pointer-events-none"
                style="background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 70%); filter: blur(28px); transform: scale(1.4);"></div>
-          <!-- Logo image -->
+          <!-- Logo image — mix-blend-mode screen removes white bg -->
           <img
             :src="`${BASE}/assets/guild/logo.jpg`"
             alt="Guild Z-One"
             class="relative w-full h-full object-cover"
-            style="box-shadow: 0 24px 72px rgba(0,0,0,0.8), 0 0 0 1px rgba(34,211,238,0.1);"
+            style="mix-blend-mode: screen; box-shadow: none;"
           />
           <!-- Tag below -->
           <p class="absolute -bottom-8 left-0 right-0 text-center text-[10px] tracking-[0.5em] uppercase font-mono text-[#1a3050]">[Z1]</p>

@@ -43,7 +43,7 @@ const values = [
               <img :src="`${BASE}/assets/guild/logo.jpg`"
                    alt="Z-One"
                    class="w-full h-full object-cover"
-                   style="filter: brightness(0.9);" />
+                   style="mix-blend-mode: screen;" />
             </div>
             <div class="pt-1">
               <h2 class="font-black text-[#dde8f5] leading-none tracking-tight mb-1.5"
