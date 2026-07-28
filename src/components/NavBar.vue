@@ -22,7 +22,7 @@ const navLinks = [
 
 <template>
   <header class="fixed top-0 inset-x-0 z-50 transition-all duration-500"
-          :class="scrolled?'border-b border-[#1a3a5c]/40 backdrop-blur-md bg-[#02050c]/88':'bg-transparent'">
+          :class="scrolled?'border-b border-[#1a3a5c]/40 backdrop-blur-md bg-[#02050c]/90':'bg-transparent'">
     <div class="max-w-6xl mx-auto px-8 md:px-14 lg:px-20 h-16 flex items-center justify-between">
 
       <!-- Logo + wordmark -->
