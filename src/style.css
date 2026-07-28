@@ -12,15 +12,12 @@
   --color-blue-bright: #3b82f6;
   --color-cyan: #06b6d4;
   --color-cyan-bright: #22d3ee;
-  --color-neon: #00fff7;
   --color-accent: #f97316;
   --color-text-primary: #e8f4ff;
   --color-text-secondary: #7ab3d9;
   --color-text-muted: #3d6b8f;
 
-  --font-display: "Rajdhani", "Arial Narrow", sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
 }
 
 *, *::before, *::after {
@@ -51,7 +48,7 @@ body {
 ::-webkit-scrollbar-track { background: #060d18; }
 ::-webkit-scrollbar-thumb { background: #1e4d8c; border-radius: 2px; }
 
-/* Glow utilities */
+/* Glow utilities — only what's actually used in components */
 .glow-blue {
   box-shadow: 0 0 20px rgba(37, 99, 235, 0.4), 0 0 60px rgba(37, 99, 235, 0.15);
 }
@@ -61,17 +58,12 @@ body {
 .glow-text {
   text-shadow: 0 0 20px rgba(34, 211, 238, 0.8), 0 0 40px rgba(37, 99, 235, 0.4);
 }
-.glow-neon {
-  box-shadow: 0 0 30px rgba(0, 255, 247, 0.4), 0 0 80px rgba(0, 255, 247, 0.1);
-  text-shadow: 0 0 10px rgba(0, 255, 247, 0.9);
-}
-.scan-line {
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 255, 247, 0.015) 2px,
-    rgba(0, 255, 247, 0.015) 4px
-  );
-}
 
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
