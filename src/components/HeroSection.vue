@@ -29,7 +29,9 @@ onUnmounted(() => window.removeEventListener('mousemove', onMove))
 
     <!-- Atmospheric glow -->
     <div class="absolute top-0 right-0 w-[50%] h-[60%] pointer-events-none"
-         style="background:radial-gradient(ellipse at 75% 20%,rgba(6,182,212,.04) 0%,transparent 65%);"></div>
+         style="background:radial-gradient(ellipse at 75% 20%,rgba(6,182,212,.07) 0%,transparent 65%);"></div>
+    <div class="absolute bottom-0 left-0 w-[40%] h-[40%] pointer-events-none"
+         style="background:radial-gradient(ellipse at 25% 80%,rgba(37,99,235,.05) 0%,transparent 65%);"></div>
 
     <!-- Content: 2-col desktop -->
     <div class="relative z-10 flex flex-col lg:flex-row items-center lg:items-end justify-between
