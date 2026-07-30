@@ -17,8 +17,43 @@
   --color-text-secondary: #7ab3d9;
   --color-text-muted: #3d6b8f;
 
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-body: "Outfit", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: #020408;
+  color: #e8f4ff;
+  font-family: "Outfit", system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app { min-height: 100vh; }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #060d18; }
+::-webkit-scrollbar-thumb { background: #1a3a5c; border-radius: 2px; }
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 
 *, *::before, *::after {
   box-sizing: border-box;
