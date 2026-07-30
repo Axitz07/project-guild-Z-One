@@ -45,45 +45,7 @@ body {
 ::-webkit-scrollbar-track { background: #060d18; }
 ::-webkit-scrollbar-thumb { background: #1a3a5c; border-radius: 2px; }
 
-/* Prefers reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: #020408;
-  color: #e8f4ff;
-  font-family: "Inter", system-ui, sans-serif;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#app {
-  min-height: 100vh;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #060d18; }
-::-webkit-scrollbar-thumb { background: #1e4d8c; border-radius: 2px; }
-
-/* Glow utilities — only what's actually used in components */
+/* Glow utilities */
 .glow-blue {
   box-shadow: 0 0 20px rgba(37, 99, 235, 0.4), 0 0 60px rgba(37, 99, 235, 0.15);
 }
