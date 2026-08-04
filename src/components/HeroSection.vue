@@ -71,6 +71,29 @@ onUnmounted(() => window.removeEventListener('mousemove', onMove))
       <!-- LEFT: Content block — bottom-aligned on desktop -->
       <div class="flex flex-col justify-end pb-16 pt-28 lg:pt-0">
 
+        <!-- Mobile logo — visible only below lg, centered above eyebrow -->
+        <div
+          class="flex lg:hidden justify-center mb-10 transition-all duration-700"
+          :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
+        >
+          <div
+            class="relative w-20 h-20 overflow-hidden"
+            style="border:1px solid rgba(34,211,238,.2);
+                   box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 0 20px rgba(34,211,238,.08);"
+          >
+            <img
+              :src="`${BASE}/assets/guild/logo.jpg`"
+              alt="Guild Z-One"
+              class="w-full h-full object-cover"
+              style="mix-blend-mode:screen;"
+            />
+            <div class="absolute top-0 right-0 w-4 h-4"
+                 style="border-top:1.5px solid rgba(34,211,238,.5);border-right:1.5px solid rgba(34,211,238,.5);" />
+            <div class="absolute bottom-0 left-0 w-4 h-4"
+                 style="border-bottom:1.5px solid rgba(34,211,238,.3);border-left:1.5px solid rgba(34,211,238,.3);" />
+          </div>
+        </div>
+
         <!-- Eyebrow — small, not screaming -->
         <div
           class="flex items-center gap-3 mb-9 transition-all duration-700"
